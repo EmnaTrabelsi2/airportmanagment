@@ -14,16 +14,17 @@ namespace AM.applicationcore.Services
         public List<Flight> Flights { get; set; } = new List<Flight>();
 
         public IList<DateTime> GetFlightDates(string destination)
-        {
+        {            //IList<DateTime> dates = new List<DateTime>();
+
             // Boucle for - on contrôle l'index
             //for (int i = 0; i < Flights.Count; i++)
             //{
-              //  Flight currentFlight = Flights[i];
+            //  Flight currentFlight = Flights[i];
 
-                //if (currentFlight.Destination == destination)
-                //{
-                  //  dates.Add(currentFlight.FlightDate);
-                //}
+            //if (currentFlight.Destination == destination)
+            //{
+            //  dates.Add(currentFlight.FlightDate);
+            //}
             //}
 
             //return dates;
@@ -44,7 +45,7 @@ namespace AM.applicationcore.Services
             return query.ToList();
             //lambda 
             // (item=>expression)
-            return Flights.Where(f=>f.Destination==destination).Select(a=>a.FlightDate).ToList();
+           // return Flights.Where(f=>f.Destination==destination).Select(a=>a.FlightDate).ToList();
         }
         public void GetFlights(string filterType, string filterValue)
         {

@@ -1,4 +1,5 @@
 ﻿using AM.applicationcore.domaine;
+using AM.infra.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace AM.infra
 {
     internal class AMcontext: DbContext  //classe generer de la base du donne ,classe de configuration du base du donne, classe generique du orm
         //package externe de visual studio :nuget 
+        //chaque calsse herite de dbcontext est un fichier de configuration 
     {
         // les classes 
         public DbSet <Flight> Flghts{ get; set; }
@@ -24,7 +26,7 @@ namespace AM.infra
 
   (@"Data Source=(localdb)\mssqllocaldb;
 
-    Initial Catalog=ADB;
+    Initial Catalog=BdBi6;
 
     Integrated Security=true;
 
@@ -32,8 +34,13 @@ namespace AM.infra
             base.OnConfiguring(optionsBuilder);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new PlaneConfiguration());
+                            modelBuilder.ApplyConfiguration(new FlightConfiguration());
 
-
+        }
 
 
 

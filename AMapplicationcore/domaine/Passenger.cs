@@ -25,7 +25,8 @@ namespace AM.applicationcore.domaine
         public string PassportNumber { get; set; }
         [RegularExpression("^[0-9] {8}-$") ]
         public int TelNumber { get; set; }
-        public ICollection<Flight> Flights { get; set; }
+        public virtual ICollection<Flight> Flights { get; set; }
+        public virtual ICollection<Ticket> ticket { get; set; }
 
 
         // polymprphisme par signature

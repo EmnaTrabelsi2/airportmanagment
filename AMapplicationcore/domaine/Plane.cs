@@ -37,8 +37,8 @@ namespace AM.applicationcore.domaine
         public int PLaneiD { get; set; }
 
 
-        public PlaneType PlaneType { get; set; }
-        public  ICollection<Flight> Flights { get; set; }
+        public virtual PlaneType PlaneType { get; set; }
+        public  virtual ICollection<Flight> Flights { get; set; }
         public override string ToString()
         {
             return ("Capacity:"+Capacity+"Manufacture Date : "+  MAnufactureDate+"plane type :"+PlaneType);

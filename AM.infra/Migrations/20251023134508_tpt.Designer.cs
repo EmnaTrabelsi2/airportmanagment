@@ -4,6 +4,7 @@ using AM.infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AM.infra.Migrations
 {
     [DbContext(typeof(AMcontext))]
-    partial class AMcontextModelSnapshot : ModelSnapshot
+    [Migration("20251023134508_tpt")]
+    partial class tpt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,31 +118,6 @@ namespace AM.infra.Migrations
                     b.ToTable("MyPlanes", (string)null);
                 });
 
-            modelBuilder.Entity("AM.applicationcore.domaine.Ticket", b =>
-                {
-                    b.Property<string>("passenger_fk")
-                        .HasColumnType("nvarchar(7)");
-
-                    b.Property<int>("flight_fk")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VIP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("prix")
-                        .HasColumnType("real");
-
-                    b.Property<int>("siege")
-                        .HasColumnType("int");
-
-                    b.HasKey("passenger_fk", "flight_fk");
-
-                    b.HasIndex("flight_fk");
-
-                    b.ToTable("Ticket");
-                });
-
             modelBuilder.Entity("FlightPassenger", b =>
                 {
                     b.Property<int>("FlightsFlightid")
@@ -201,25 +179,6 @@ namespace AM.infra.Migrations
                     b.Navigation("Planes");
                 });
 
-            modelBuilder.Entity("AM.applicationcore.domaine.Ticket", b =>
-                {
-                    b.HasOne("AM.applicationcore.domaine.Flight", "flight")
-                        .WithMany("ticket")
-                        .HasForeignKey("flight_fk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AM.applicationcore.domaine.Passenger", "passenger")
-                        .WithMany("ticket")
-                        .HasForeignKey("passenger_fk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("flight");
-
-                    b.Navigation("passenger");
-                });
-
             modelBuilder.Entity("FlightPassenger", b =>
                 {
                     b.HasOne("AM.applicationcore.domaine.Flight", null)
@@ -251,16 +210,6 @@ namespace AM.infra.Migrations
                         .HasForeignKey("AM.applicationcore.domaine.Traveller", "PassportNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AM.applicationcore.domaine.Flight", b =>
-                {
-                    b.Navigation("ticket");
-                });
-
-            modelBuilder.Entity("AM.applicationcore.domaine.Passenger", b =>
-                {
-                    b.Navigation("ticket");
                 });
 
             modelBuilder.Entity("AM.applicationcore.domaine.Plane", b =>

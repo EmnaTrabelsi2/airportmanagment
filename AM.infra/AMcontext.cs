@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace AM.infra
 {
-    internal class AMcontext: DbContext  //classe generer de la base du donne ,classe de configuration du base du donne, classe generique du orm
+    public class AMcontext: DbContext  //classe generer de la base du donne ,classe de configuration du base du donne, classe generique du orm
         //package externe de visual studio :nuget 
         //chaque calsse herite de dbcontext est un fichier de configuration 
     {
         // les classes 
-        public DbSet <Flight> Flghts{ get; set; }
+        public DbSet <Flight> Flghts{ get; set; }//crud
         public DbSet <Passenger> Passengers{ get; set; }
         public DbSet<Plane> Planes { get; set; }
         public DbSet<Staff> Staffs { get; set; }
@@ -32,16 +32,29 @@ namespace AM.infra
 
     MultipleActiveResultSets=true");
             base.OnConfiguring(optionsBuilder);
+            //lazyLoading
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)//configuration fkuent api 
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new PlaneConfiguration());
-                            modelBuilder.ApplyConfiguration(new FlightConfiguration());
+            modelBuilder.ApplyConfiguration(new FlightConfiguration());
+            //tph 
+            //modelBuilder.Entity<Passenger>().HasDiscriminator<int>("PassengerType").HasValue<Passenger>(0).HasValue<Staff>(1).HasValue<Traveller>(2);
+            //tpt
+            modelBuilder.Entity<Staff>().ToTable("Staffs");
+            modelBuilder.Entity<Traveller>().ToTable("Travellers");
+            modelBuilder.Entity<Ticket>().HasKey(t => new { t.passenger_fk, t.flight_fk });
+
+
 
         }
-
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<DateTime>().HaveColumnType("date");
+        }
 
 
 

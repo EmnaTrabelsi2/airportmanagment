@@ -18,9 +18,10 @@ namespace AM.applicationcore.domaine
         [ForeignKey("Plane")]
         public int PlaneFK { get; set; }
 
-        public Plane Plane { get; set; }
+        public virtual Plane Planes { get; set; }
+        public  virtual ICollection<Ticket> ticket { get; set; }
         //public string airline { get; set; }
-        public ICollection<Passenger> Passengers { get; set; }
+        public virtual ICollection<Passenger> Passengers { get; set; }
 
         public override string ToString()
         {
@@ -29,7 +30,7 @@ namespace AM.applicationcore.domaine
                    $"on {FlightDate:dd/MM/yyyy} " +
                    $"(Arrives: {EffectiveArrival:dd/MM/yyyy HH:mm}, " +
                    $"Duration: {EstimatedDuration}h) " +
-                   $"\nPlane: {Plane} ";
+                   $"\nPlane: {Planes} ";
         }
     }
 }

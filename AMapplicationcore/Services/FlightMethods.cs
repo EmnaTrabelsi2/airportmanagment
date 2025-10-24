@@ -101,7 +101,7 @@ namespace AM.applicationcore.Services
         public void ShowFlight(Plane P)
         {
             var query = from f in Flights
-                        where f.Plane == P
+                        where f.Planes == P
                         select new { f.FlightDate, f.Destination };
             foreach (var item in query)
             {
